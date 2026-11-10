@@ -1,0 +1,15 @@
+{
+  "name": "shipd-forge-agent-skill",
+  "version": "0.3.0",
+  "type": "module",
+  "description": "Portable browser-capable Agent Skill for engineering, certifying and explicitly authorized submission of Shipd coding challenges",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "test": "node --test",
+    "install-skill": "node scripts/install-skill.mjs",
+    "intake": "node scripts/create-intake.mjs",
+    "forge": "node src/cli.js"
+  }
+}
