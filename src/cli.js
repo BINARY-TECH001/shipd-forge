@@ -36,7 +36,7 @@ try {
     const result=validateArtifacts(resolve(flag('--path','.')));out(result);if(!result.passed)process.exitCode=2;
   } else if(command==='olympus-budget'){
     const pricesDoc=flag('--prices-file')?readJson(flag('--prices-file')):null;
-    const liveVerified=!!pricesDoc&&pricesDoc.liveVerified===true&&typeof pricesDoc.sourceUrl==='string'&&typeof pricesDoc.capturedAt==='string';
+    const liveVerified=!!pricesDoc&&pricesDoc.liveVerified===true&&pricesDoc.policyVerified===true&&pricesDoc.workflowVerified===true&&typeof pricesDoc.sourceUrl==='string'&&typeof pricesDoc.capturedAt==='string';
     const result=estimateOlympusBudget({nova:Number(flag('--nova','4')),orion:Number(flag('--orion','4')),vega:Number(flag('--vega','4'))},pricesDoc?.prices??null,liveVerified);
     out({...result,priceEvidence:liveVerified?{sourceUrl:pricesDoc.sourceUrl,capturedAt:pricesDoc.capturedAt}:null});
     if(!result.complete)process.exitCode=2;

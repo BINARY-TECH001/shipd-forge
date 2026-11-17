@@ -47,7 +47,7 @@ export function validateArtifacts(dir) {
   const script=rawScript.replace(/^\s*#.*$/gm,'');
   const dockerBase=/^FROM\s+public\.ecr\.aws\/d3j8x8q7\/olympus-base:latest(?:\s|$)/im.test(dockerfile);
   const workdir=/^WORKDIR\s+\S+/im.test(dockerfile);
-  const outputPath=/--output_path(?:=|\s|["'])/i.test(script)&&/(?:output_path|outputPath)/.test(script);
+  const outputPath=/--output_path\b/i.test(script)&&/(?:output_path|outputPath)/.test(script);
   const junitXml=/junit/i.test(script)&&/\.xml/i.test(script);
   if(dockerfile&&!dockerBase)issues.push('Dockerfile must use required Olympus base image: public.ecr.aws/d3j8x8q7/olympus-base:latest');
   if(dockerfile&&!workdir)issues.push('Dockerfile must declare a non-empty WORKDIR.');
