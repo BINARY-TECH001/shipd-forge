@@ -42,7 +42,7 @@ const authorization = {
   upload: authorizeUpload,
   createChallenge: authorizeCreate,
   agentRollouts: authorizeEvaluation,
-  autoReview: authorizeEvaluation,
+  trialQA: authorizeEvaluation,
   submit: authorizeSubmit,
   autonomousSubmit,
   maximumSpend: capRaw ? Number(capRaw) : 0,

@@ -2,6 +2,7 @@
 import { openDb } from './db.js';
 import { configureBudget, budgetStatus, reserve, settle, recordActual, acceptanceStats } from './ledger.js';
 import { runRepoGate, validateArtifacts } from './checks.js';
+import { estimateOlympusBudget, validateRollouts } from './olympus-policy.js';
 import { resolve } from 'node:path';
 
 const [command, ...args] = process.argv.slice(2);
@@ -38,7 +39,7 @@ try {
       requiredBeforePaidActions:['live quest requirements verified','account balance verified','operation cost verified','remaining budget reserved','explicit authorization recorded'],
       note:'This build has no Shipd API/browser adapter. It will not infer live balance, costs, evaluator availability or quest rules.'});
   } else {
-    console.log(`Shipd Forge 0.3.0\nCommands:\n  init --challenge ID --cap N [--balance N]\n  budget --challenge ID\n  reserve --challenge ID --operation NAME --cost N [--dry-run]\n  settle --id ID --actual N [--note TEXT]\n  record-spend --challenge ID --operation NAME --actual N --confirm\n  repo-gate --path DIR [--stars N --license SPDX --min-stars N]\n  artifacts --path DIR\n  stats\n  preflight --dry-run\n\nUse --db PATH to select the SQLite ledger. Paid Shipd operations are not implemented.`);
+    console.log(`Shipd Forge 0.4.0\nCommands:\n  init --challenge ID --cap N [--balance N]\n  budget --challenge ID\n  reserve --challenge ID --operation NAME --cost N [--dry-run]\n  settle --id ID --actual N [--note TEXT]\n  record-spend --challenge ID --operation NAME --actual N --confirm\n  repo-gate --path DIR [--stars N --license SPDX --min-stars N]\n  artifacts --path DIR\n  stats\n  olympus-budget [--nova N --orion N --vega N]\n  olympus-rollouts --file platform-rollouts.json\n  preflight --dry-run\n\nUse --db PATH to select the SQLite ledger. Paid Shipd operations are not implemented.`);
   }
 } catch (e) { console.error(JSON.stringify({ok:false,error:e.message},null,2)); process.exitCode=1; }
 finally { db.close(); }

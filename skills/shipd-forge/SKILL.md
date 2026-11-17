@@ -13,7 +13,7 @@ Accept these inputs in natural language or from `templates/intake.md`:
 - **Required:** Shipd challenge URL (or a clearly identified quest/challenge page).
 - **Optional:** GitHub repository URL. If omitted, inspect the challenge context and ask for a repository only when it is genuinely necessary to proceed.
 - **Optional:** target quest/track, desired feature, constraints, token cap, preferred working directory, and coding-agent identity.
-- **Default authorization:** research, browser read-only work and local work only. No paid Shipd action, upload, challenge creation, rollout, Auto Review or submission is authorized by merely providing URLs.
+- **Default authorization:** research, browser read-only work and local work only. No paid Shipd action, upload, challenge creation, rollout, Trial QA or submission is authorized by merely providing URLs.
 - **Autonomous submission authorization:** only when the intake manifest explicitly sets `authorization.autonomousSubmit=true`, includes a user-defined `budgetCap`, and enables the individual platform-action flags. In that mode, execute the complete gated browser workflow and submit without asking for another confirmation, but never exceed the cap or bypass a failed gate.
 
 ## Operating principles
@@ -103,7 +103,11 @@ Generate only the artifact names/formats required by the current quest. Typical 
 7. If a check fails, fix and rerun all affected checks. Editing an input invalidates downstream results that depend on it.
 8. If Docker is unavailable or unsafe, mark Docker certification `BLOCKED`; do not claim it passed based on static inspection.
 
-### Phase 6 — Independent quality and difficulty review
+### Olympus rollout and Trial QA (2026-11-17 baseline; UNVERIFIED)
+Verify live policy, stage order, costs and balance in authenticated Shipd UI before spending. User-provided baseline: at least four runs per family; Nova exactly 0% pass; Orion >0% and <=25%, every passing run sequenceLength >=256000; Vega <=25%. Costs: Nova 8, Orion 16, Vega 10; solution quality 12; test quality 12; Trial QA 30 plus 5 per rollout beyond 4/4/4. Minimum estimate 190 tokens, excluding unknown fees. Run free preflight first (tests, solution, flakiness, prompt quality, environment and reward-hacking), then solution quality, test quality, rollouts and Trial QA; verify live order. No automatic retries. Extra runs require budget recomputation, verified balance and renewed authorization. Never infer sequence-length units.
+Review, Final Review and FP Panel reportedly removed; Auto Review replaced by Trial QA. Treat all announcement details as unverified until checked live.
+
+## Phase 6 — Independent quality and difficulty review
 
 Review challenge scope, ambiguity, originality evidence, test strength, solution correctness, patch hygiene, portability, resource use and quest fit. Use inexpensive local probes first. Do not run expensive model rollouts unless current calibration criteria, costs, balance and user authorization are all verified. Keep benchmark solve rates separate from the user's submission acceptance metric.
 
