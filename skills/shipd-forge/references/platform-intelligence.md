@@ -33,3 +33,7 @@ Mingo, Marshmallow and a Molstar repository challenge were previously investigat
 
 ## Provenance rule
 When using a fact from this file in a readiness decision, label it `historical research` and independently verify it. If it cannot be verified, mark the relevant gate `UNVERIFIED` or `BLOCKED`.
+
+
+## Olympus policy snapshot — 2026-11-17 (UNVERIFIED)
+User-provided baseline; re-check authenticated Shipd UI before spend. Nova: >=4 runs, exactly 0% pass, 8 tokens/run. Orion: >=4, >0% and <=25% pass, passing sequenceLength >=256000, 16 tokens/run. Vega: >=4, <=25% pass, 10 tokens/run. Solution quality 12; test quality 12; Trial QA 30 plus 5 per extra rollout. Minimum estimate 190 tokens. Reported order: free preflight, solution quality, test quality, rollouts, Trial QA, acceptance. Review, Final Review and FP Panel reportedly removed; Auto Review reportedly replaced by Trial QA. Tier drip, caps, bonuses, demotion/comeback windows and revert compensation must not be counted as available balance without live evidence.

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0
+- Added unverified dated Olympus rollout policy, token estimator and result validator.
+- Added Nova/Orion/Vega pass-rate and Orion sequence-length regression tests.
+- Hardened paid reservations and settlements to require sufficient recorded balance.
+- Replaced obsolete Auto Review intake flag with Trial QA.
+
+
 ## 0.3.0
 - Added browser-first Shipd research and UI operation playbook.
 - Added explicit autonomous submission authorization with mandatory user-defined spend cap.

@@ -1,4 +1,4 @@
-# Shipd Forge — Technical Specification v0.3.0
+# Shipd Forge — Technical Specification v0.4.0
 
 ## Product definition
 
@@ -49,3 +49,7 @@ Shipd Forge is a provider-neutral Agent Skill, not a standalone autonomous agent
 ## Non-goals and limitations
 
 Forge does not promise global novelty, a particular Shipd evaluation result, or 80% acceptance. It does not bundle a universal Shipd API, login automation or browser driver. Browser support is a host-agent capability. A missing capability is `BLOCKED`, never simulated as success.
+
+
+## Olympus policy engine
+The 2026-11-17 user-provided baseline is stored as UNVERIFIED. The engine estimates costs and validates recorded rollout results; it does not connect to Shipd or verify live balance. Authenticated browser verification is mandatory before paid actions. Minimum estimated cost is 190 tokens; extra runs add model cost plus 5 Trial QA tokens.

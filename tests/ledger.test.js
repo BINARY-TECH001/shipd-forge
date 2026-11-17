@@ -15,13 +15,13 @@ test('ledger persists spend and balance across database reopen', t => {
 });
 
 test('reservation blocks cap overspend', t => {
-  const db=fixture(t); configureBudget(db,{challengeId:'c2',cap:5});
+  const db=fixture(t); configureBudget(db,{challengeId:'c2',cap:5,openingBalance:10});
   reserve(db,{challengeId:'c2',operation:'a',estimated:4});
   assert.throws(()=>reserve(db,{challengeId:'c2',operation:'b',estimated:2}),/cap would be exceeded/);
 });
 
 test('actual settlement cannot exceed cap', t => {
-  const db=fixture(t); configureBudget(db,{challengeId:'c3',cap:5});
+  const db=fixture(t); configureBudget(db,{challengeId:'c3',cap:5,openingBalance:10});
   const id=reserve(db,{challengeId:'c3',operation:'x',estimated:2});
   assert.throws(()=>settle(db,{reservationId:id,actual:6}),/exceed challenge cap/);
 });
@@ -32,3 +32,7 @@ test('first-pass acceptance metric excludes revised acceptances', t => {
   recordSubmission(db,{challengeId:'c',outcome:'rejected'});
   assert.deepEqual(acceptanceStats(db),{total:3,firstPassAccepted:1,accepted:2,firstPassRate:1/3});
 });
+
+
+test('paid reservation requires a recorded available balance', t => { const db=fixture(t); configureBudget(db,{challengeId:'c4',cap:10}); assert.throws(()=>reserve(db,{challengeId:'c4',operation:'x',estimated:1}),/balance is required/); });
+test('reservation cannot exceed available balance even within cap', t => { const db=fixture(t); configureBudget(db,{challengeId:'c5',cap:100,openingBalance:3}); assert.throws(()=>reserve(db,{challengeId:'c5',operation:'x',estimated:4}),/Insufficient recorded platform balance/); });

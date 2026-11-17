@@ -2,7 +2,7 @@
 
 **A portable, browser-capable, provider-neutral Agent Skill for Codex, Claude Code, Antigravity and compatible coding agents.** Give it a Shipd challenge URL, an optional GitHub repository URL and an authorization/budget scope. The agent researches the live quest, audits the repository, designs and builds an original challenge, certifies it locally, and can operate the authenticated Shipd browser UI and submit when autonomous submission is explicitly authorized.
 
-> Status: **v0.3.0 — browser-ready skill package**. The skill defines browser operation and autonomous submission controls. It does not contain a universal Shipd API or guarantee that every host agent exposes browser/computer-use, upload or file-dialog capabilities. Those capabilities must be available in the chosen agent environment and are verified at runtime.
+> Status: **v0.4.0 — Olympus token-efficient skill package (live policy verification required)**. The skill defines browser operation and autonomous submission controls. It does not contain a universal Shipd API or guarantee that every host agent exposes browser/computer-use, upload or file-dialog capabilities. Those capabilities must be available in the chosen agent environment and are verified at runtime.
 
 ## Recommended distribution: public GitHub repository
 
@@ -67,6 +67,9 @@ See [`skills/shipd-forge/references/browser-operations.md`](skills/shipd-forge/r
 6. Certify baseline, fail-to-pass tests, solution tests, regressions, Docker/JUnit/offline behaviour and repeatability where required.
 7. Produce a readiness report with evidence, hashes, commands, risks and spend.
 8. When authorized, use the browser to complete the live platform workflow and verify the final submission state.
+
+## Olympus token planning
+The November 17 user-provided baseline estimates 190 tokens minimum: 136 for 4/4/4 Nova/Orion/Vega runs, 24 for solution/test quality, and 30 for Trial QA. Each extra rollout adds its model cost plus 5 Trial QA tokens. Calculate with `node src/cli.js olympus-budget`; validate recorded results with `olympus-rollouts --file <json>`. Policy remains UNVERIFIED until checked in authenticated Shipd UI. Ledger paid reservations require a recorded available balance.
 
 ## Requirements
 

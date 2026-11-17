@@ -57,3 +57,14 @@ This is a generic engineering checklist. The live quest contract overrides gener
 - [ ] Policy snapshot is current.
 - [ ] Token ledger reconciled.
 - [ ] User approval obtained for the exact next paid action.
+
+
+## Olympus-specific gates (baseline; verify live)
+- [ ] Free preflight covers solution, tests, flakiness, prompt quality, environment and reward-hacking.
+- [ ] Solution quality and test quality order verified in live UI.
+- [ ] Nova/Orion/Vega counts and pass-rate limits validated from platform evidence.
+- [ ] Passing Orion run reports sequenceLength >=256000.
+- [ ] Trial QA fee includes base plus five tokens per extra rollout.
+- [ ] Verified balance and user cap cover reserved spend.
+- [ ] No automatic retries or unapproved extra rollouts.
+- [ ] Visible acceptance confirmation recorded.
