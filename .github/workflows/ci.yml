@@ -1,0 +1,29 @@
+name: Forge local certification
+on:
+  push:
+    branches: ["main", "fix/**", "feat/**"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Verify runtime
+        run: node --version
+      - name: Run complete local test suite
+        run: npm test
+      - name: Verify CLI entry points
+        run: |
+          node src/cli.js olympus-budget || test "$?" -eq 2
+          node src/cli.js --help

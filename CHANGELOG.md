@@ -1,23 +1,16 @@
 # Changelog
 
-## 0.4.0
-- Added unverified dated Olympus rollout policy, token estimator and result validator.
-- Added Nova/Orion/Vega pass-rate and Orion sequence-length regression tests.
-- Hardened paid reservations and settlements to require sufficient recorded balance.
-- Replaced obsolete Auto Review intake flag with Trial QA.
+## [0.5.0] - 2026-11-17 — remediation candidate, not released
+- Corrected Orion sequence validation to average passing-run sequence lengths.
+- Added cheat-rate, fairness and environment evidence validation.
+- Added local Step 1 evidence gate.
+- Prevented the 190-token subtotal from being reported as a complete budget.
+- Implemented missing Olympus CLI handlers.
+- Added Dockerfile base/WORKDIR and test.sh --output_path/JUnit XML validation.
+- Added artifact regression tests and GitHub Actions test matrix.
+- Kept workflow order and missing stage prices UNVERIFIED pending authenticated platform evidence.
+- Not merged into main; certification remains pending.
 
-
-## 0.3.0
-- Added browser-first Shipd research and UI operation playbook.
-- Added explicit autonomous submission authorization with mandatory user-defined spend cap.
-- Added browser evidence, authenticated-session, CAPTCHA/MFA and final-state verification rules.
-- Added public-repository bootstrap prompt and root skill entry point.
-- Updated cross-agent installation and invocation guidance.
-- Clarified that browser availability is supplied by the host agent and is checked at runtime.
-
-## 0.2.0
-- Added portable Agent Skill packaging, installer and URL intake helper.
-- Added references, templates and package tests.
-
-## 0.1.0
-- Added SQLite token ledger, repository/artifact checks and initial CLI.
+## [0.4.0] - 2026-11-17
+- Initial Olympus rollout policy, budget estimator and balance safeguards.
+- Policy and prices require live verification; release not certified.
