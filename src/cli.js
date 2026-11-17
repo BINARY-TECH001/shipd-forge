@@ -53,7 +53,7 @@ try {
     out({passed:true,from:flag('--from'),to:flag('--to'),sourceUrl:evidence.sourceUrl,capturedAt:evidence.capturedAt});
   } else if(command==='stats')out(acceptanceStats(db));
   else if(command==='preflight')out({mode:has('--dry-run')?'dry-run':'read-only',paidActionsEnabled:false,requiredBeforePaidActions:['live quest requirements verified','all required stage prices verified','account balance verified','remaining budget reserved','explicit authorization recorded'],note:'No Shipd API/browser adapter is implemented. This command never authorizes or performs paid actions.'});
-  else console.log(\`Shipd Forge 0.5.0
+  else console.log(`Shipd Forge 0.5.0
 Commands:
   init --challenge ID --cap N [--balance N]
   budget --challenge ID
@@ -70,6 +70,6 @@ Commands:
   stats
   preflight --dry-run
 
-Olympus policy and stage prices remain UNVERIFIED until captured from the authenticated live quest. Paid Shipd operations are not implemented.\`);
+Olympus policy and stage prices remain UNVERIFIED until captured from the authenticated live quest. Paid Shipd operations are not implemented.`);
 } catch(error){console.error(JSON.stringify({ok:false,error:error.message},null,2));process.exitCode=1;}
 finally{db.close();}
