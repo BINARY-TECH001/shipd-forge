@@ -34,7 +34,8 @@ export function reserve(db, { challengeId, operation, estimated, note = '' }) {
   if (!Number.isFinite(estimated) || estimated < 0) throw new Error('reservation must be non-negative');
   const s = budgetStatus(db, challengeId);
   if (estimated > s.availableCap) throw new Error(`Budget cap would be exceeded: need ${estimated}, available ${s.availableCap}`);
-  if (s.balance !== null && estimated > s.balance - s.spent - s.reserved) throw new Error('Insufficient recorded platform balance for reservation');
+  if (s.balance === null) throw new Error('Verified available platform balance is required before paid reservation');
+  if (estimated > s.balance - s.reserved) throw new Error('Insufficient recorded platform balance for reservation');
   const result = db.prepare(`INSERT INTO ledger(challenge_id,operation,estimated,status,note,created_at) VALUES(?,?,?,'reserved',?,?)`)
     .run(challengeId, operation, estimated, note, now());
   return Number(result.lastInsertRowid);
@@ -46,18 +47,20 @@ export function settle(db, { reservationId, actual, note = '' }) {
   if (!item) throw new Error('active reservation not found');
   const s = budgetStatus(db, item.challenge_id);
   if (actual > s.cap - s.spent - (s.reserved - item.estimated)) throw new Error('Actual cost would exceed challenge cap; stop and reconcile');
+  if (s.balance === null || actual > s.balance - (s.reserved - item.estimated)) throw new Error('Actual cost would exceed verified platform balance; stop and reconcile');
   db.prepare("UPDATE ledger SET status='actual', actual=?, note=?, created_at=? WHERE id=?")
     .run(actual, note, now(), reservationId);
-  if (s.balance !== null) setMeta(db, `balance:${item.challenge_id}`, Math.max(0, s.balance - actual));
+  setMeta(db, `balance:${item.challenge_id}`, s.balance - actual);
 }
 
 export function recordActual(db, { challengeId, operation, actual, note = '' }) {
   if (!Number.isFinite(actual) || actual < 0) throw new Error('actual cost must be non-negative');
   const s = budgetStatus(db, challengeId);
   if (actual > s.availableCap) throw new Error(`Actual spend would exceed challenge cap: need ${actual}, available ${s.availableCap}`);
+  if (s.balance === null || actual > s.balance - s.reserved) throw new Error('Verified available platform balance is missing or insufficient');
   db.prepare(`INSERT INTO ledger(challenge_id,operation,estimated,actual,status,note,created_at) VALUES(?,?,0,?,'actual',?,?)`)
     .run(challengeId, operation, actual, note, now());
-  if (s.balance !== null) setMeta(db, `balance:${challengeId}`, Math.max(0, s.balance - actual));
+  setMeta(db, `balance:${challengeId}`, s.balance - actual);
 }
 
 export function recordSubmission(db, record) {

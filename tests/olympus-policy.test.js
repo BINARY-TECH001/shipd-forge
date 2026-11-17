@@ -1,0 +1,12 @@
+import test from "node:test";import assert from "node:assert/strict";import{estimateOlympusBudget,validateRollouts,assertPolicyFreshness,assertStageTransition}from"../src/olympus-policy.js";
+const rs=(p,n=4,s=256000)=>Array.from({length:n},(_,i)=>({passed:i<p,sequenceLength:s}));
+test("minimum Olympus plan is 190 tokens",()=>assert.equal(estimateOlympusBudget().total,190));
+test("extra Orion rollout costs 21 additional tokens",()=>assert.equal(estimateOlympusBudget({orion:5}).total,211));
+test("valid 0/1/0 rollout mix passes",()=>assert.equal(validateRollouts({nova:rs(0),orion:rs(1),vega:rs(0)}).passed,true));
+test("Nova must have zero passes",()=>assert.equal(validateRollouts({nova:rs(1),orion:rs(1),vega:rs(0)}).passed,false));
+test("Orion must pass but not exceed 25 percent",()=>{assert.equal(validateRollouts({nova:rs(0),orion:rs(0),vega:rs(0)}).passed,false);assert.equal(validateRollouts({nova:rs(0),orion:rs(2),vega:rs(0)}).passed,false)});
+test("Orion passing sequence length is enforced",()=>assert.equal(validateRollouts({nova:rs(0),orion:rs(1,4,255999),vega:rs(0)}).passed,false));
+test("Vega max pass rate is enforced",()=>assert.equal(validateRollouts({nova:rs(0),orion:rs(1),vega:rs(2)}).passed,false));
+test("each family needs four runs",()=>assert.equal(validateRollouts({nova:rs(0,3),orion:rs(1),vega:rs(0)}).passed,false));
+test("policy freshness blocks unverified rules",()=>assert.throws(()=>assertPolicyFreshness(),/unverified/));
+test("stage order is enforced",()=>{assertStageTransition("preflight","solution-quality");assert.throws(()=>assertStageTransition("preflight","rollouts"),/Invalid/)});
